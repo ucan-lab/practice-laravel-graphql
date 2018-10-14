@@ -125,6 +125,7 @@ return [
         'default' => [
             'query' => [
                 App\GraphQL\Query\UserQuery::class,
+                App\GraphQL\Query\UsersQuery::class,
             ],
             'mutation' => [
 
