@@ -1,33 +1,83 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\GraphQL\Mutation;
 
 use Folklore\GraphQL\Support\Mutation;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\ObjectType;
 use GraphQL;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 
+/**
+ * ユーザーを登録するミューテーション
+ */
 class CreateUserMutation extends Mutation
 {
+    /**
+     * ミューテーション名の定義と概要
+     *
+     * @var array
+     */
     protected $attributes = [
-        'name' => 'CreateUserMutation',
-        'description' => 'A mutation'
+        'name' => 'CreateUser',
+        'description' => 'CreateUser mutation'
     ];
 
-    public function type()
+    /**
+     * ミューテーションが扱う型を定義
+     *
+     * @return ObjectType
+     */
+    public function type() : ObjectType
     {
-        return Type::listOf(Type::string());
+        return GraphQL::type('UserType');
     }
 
-    public function args()
+    /**
+     * ミューテーションが取り得る引数を定義
+     *
+     * @return array
+     */
+    public function args() : array
     {
         return [
-            
+            'name' => [
+                'name' => 'name',
+                'type' => Type::string(),
+                'rules' => ['required', 'string', 'max:255'],
+            ],
+            'email' => [
+                'name' => 'email',
+                'type' => Type::string(),
+                'rules' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            ],
+            'password' => [
+                'name' => 'password',
+                'type' => Type::string(),
+                'rules' => ['required', 'string', 'min:6'],
+            ],
         ];
     }
 
-    public function resolve($root, $args, $context, ResolveInfo $info)
+    /**
+     * ミューテーションに対する実処理
+     *
+     * @param array $root
+     * @param array $args
+     * @return User
+     */
+    public function resolve($root, $args, $context, ResolveInfo $info) : User
     {
-        return [];
+        $user = User::create([
+            'name' => $args['name'],
+            'email' => $args['email'],
+            'password' => Hash::make($args['password']),
+        ]);
+
+        return $user;
     }
 }
