@@ -128,7 +128,7 @@ return [
                 App\GraphQL\Query\UsersQuery::class,
             ],
             'mutation' => [
-
+                App\GraphQL\Mutation\CreateUserMutation::class,
             ]
         ]
     ],
