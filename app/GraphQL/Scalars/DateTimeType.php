@@ -24,9 +24,9 @@ class DateTimeType extends ScalarType implements TypeConvertible
      * @param mixed $value
      * @return mixed
      */
-    public function serialize($value) : DateTime
+    public function serialize($value) : int
     {
-        return $value;
+        return (int)$value->format('U');
     }
 
     /**
