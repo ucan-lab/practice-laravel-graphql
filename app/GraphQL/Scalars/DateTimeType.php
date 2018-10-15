@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\GraphQL\Scalars;
 
 use Folklore\GraphQL\Support\Contracts\TypeConvertible;
 use GraphQL\Type\Definition\ScalarType;
+use DateTime;
 
 class DateTimeType extends ScalarType implements TypeConvertible
 {
@@ -15,13 +18,13 @@ class DateTimeType extends ScalarType implements TypeConvertible
     /**
      * @var string
      */
-    public $description = '';
+    public $description = 'DateTime scalar type';
 
     /**
      * @param mixed $value
      * @return mixed
      */
-    public function serialize($value)
+    public function serialize($value) : DateTime
     {
         return $value;
     }
@@ -30,7 +33,7 @@ class DateTimeType extends ScalarType implements TypeConvertible
      * @param mixed $value
      * @return string
      */
-    public function parseValue($value)
+    public function parseValue($value) : string
     {
         return $value;
     }
@@ -39,7 +42,7 @@ class DateTimeType extends ScalarType implements TypeConvertible
      * @param $ast
      * @return null|string
      */
-    public function parseLiteral($ast)
+    public function parseLiteral($ast) : ?string
     {
         return null;
     }
@@ -47,7 +50,7 @@ class DateTimeType extends ScalarType implements TypeConvertible
     /**
      * @return DateTimeType
      */
-    public function toType()
+    public function toType() : DateTimeType
     {
         return new static();
     }
