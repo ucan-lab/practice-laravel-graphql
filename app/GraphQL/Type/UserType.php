@@ -43,6 +43,14 @@ class UserType extends BaseType
                 'type' => Type::string(),
                 'description' => 'The email of user',
             ],
+            'created_at' => [
+                'type' => GraphQL::type('DateTimeType'),
+                'description' => 'The created_at of user',
+            ],
+            'updated_at' => [
+                'type' => GraphQL::type('DateTimeType'),
+                'description' => 'The updated_at of user',
+            ],
         ];
     }
 }
