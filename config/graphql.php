@@ -183,6 +183,7 @@ return [
      */
     'types' => [
         App\GraphQL\Type\UserType::class,
+        App\GraphQL\Type\PostType::class,
         // custom scalar type
         App\GraphQL\Scalars\DateTimeType::class,
     ],

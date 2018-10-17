@@ -20,7 +20,7 @@ class UserType extends BaseType
      */
     protected $attributes = [
         'name' => 'UserType',
-        'description' => 'A type'
+        'description' => 'user type'
     ];
 
     /**
@@ -50,6 +50,10 @@ class UserType extends BaseType
             'updated_at' => [
                 'type' => GraphQL::type('DateTimeType'),
                 'description' => 'The updated_at of user',
+            ],
+            'posts' => [
+                'type' => Type::listOf(GraphQL::type('PostType')),
+                'description' => 'The posts of user',
             ],
         ];
     }

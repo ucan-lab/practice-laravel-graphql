@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\GraphQL\Type;
 
 use GraphQL\Type\Definition\Type;
@@ -10,13 +12,20 @@ class PostType extends BaseType
 {
     protected $attributes = [
         'name' => 'PostType',
-        'description' => 'A type'
+        'description' => 'post type'
     ];
 
-    public function fields()
+    public function fields() : array
     {
         return [
-            
+            'title' => [
+                'type' => Type::string(),
+                'description' => 'The title of post',
+            ],
+            'content' => [
+                'type' => Type::string(),
+                'description' => 'The content of post',
+            ],
         ];
     }
 }
