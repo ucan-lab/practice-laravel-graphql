@@ -18,6 +18,10 @@ class PostType extends BaseType
     public function fields() : array
     {
         return [
+            'id' => [
+                'type' => Type::id(),
+                'description' => 'The id of the user'
+            ],
             'user' => [
                 'type' => GraphQL::type('UserType'),
                 'description' => 'The user of post',
