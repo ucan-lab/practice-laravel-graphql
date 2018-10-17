@@ -30,7 +30,7 @@ class UsersQuery extends Query
     /**
      * クエリが扱う型を定義
      *
-     * @return ObjectType
+     * @return ListOfType
      */
     public function type() : ListOfType
     {
@@ -56,7 +56,7 @@ class UsersQuery extends Query
             'email' => [
                 'name' => 'email',
                 'type' => Type::string(),
-            ]
+            ],
         ];
     }
 
