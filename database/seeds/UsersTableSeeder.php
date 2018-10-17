@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Post;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class UsersTableSeeder extends Seeder
     {
         User::truncate();
 
-        factory(User::class, 30)->create();
+        factory(User::class, 50)->create()->each(function ($user) {
+            factory(Post::class, 10)->create(['user_id' => $user->id]);
+        });
     }
 }
