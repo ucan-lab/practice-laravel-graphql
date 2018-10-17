@@ -126,6 +126,8 @@ return [
             'query' => [
                 App\GraphQL\Query\UserQuery::class,
                 App\GraphQL\Query\UsersQuery::class,
+                App\GraphQL\Query\PostQuery::class,
+                App\GraphQL\Query\PostsQuery::class,
             ],
             'mutation' => [
                 App\GraphQL\Mutation\CreateUserMutation::class,
