@@ -5,11 +5,11 @@ declare(strict_types = 1);
 namespace App\GraphQL\Query;
 
 use Folklore\GraphQL\Support\Query;
+use Folklore\GraphQL\Support\PaginationType;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
-use GraphQL\Type\Definition\ListOfType;
 use GraphQL;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Post;
 
 /**
@@ -30,11 +30,11 @@ class PostsQuery extends Query
     /**
      * クエリが扱う型を定義
      *
-     * @return ListOfType
+     * @return PaginationType
      */
-    public function type() : ListOfType
+    public function type() : PaginationType
     {
-        return Type::listOf(GraphQL::type('PostType'));
+        return GraphQL::pagination(GraphQL::type('PostType'));
     }
 
     /**
@@ -53,6 +53,12 @@ class PostsQuery extends Query
                 'name' => 'ids',
                 'type' => Type::listOf(Type::id()),
             ],
+            'take' => [
+                'type' => Type::int(),
+            ],
+            'page' => [
+                'type' => Type::int(),
+            ],
         ];
     }
 
@@ -61,9 +67,9 @@ class PostsQuery extends Query
      *
      * @param array $root
      * @param array $args
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function resolve($root, $args, $context, ResolveInfo $info) : Collection
+    public function resolve($root, $args, $context, ResolveInfo $info) : LengthAwarePaginator
     {
         $query = Post::query();
 
@@ -75,6 +81,9 @@ class PostsQuery extends Query
             $query->whereIn('id', $args['ids']);
         }
 
-        return $query->get();
+        $perPage = $args['take'] ?? 20;
+        $page = $args['page'] ?? 1;
+
+        return $query->paginate($perPage, ['*'], 'page', $page);
     }
 }
