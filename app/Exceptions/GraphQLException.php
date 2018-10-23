@@ -6,26 +6,13 @@ namespace App\Exceptions;
 
 use Folklore\GraphQL\Error\ValidationError;
 use GraphQL\Error\Error;
+use Folklore\GraphQL\GraphQL;
 
-class GraphQLException
+class GraphQLException extends GraphQL
 {
     public static function formatError(Error $e)
     {
-        $error = [
-            'message' => $e->getMessage()
-        ];
-
-        $locations = $e->getLocations();
-        if (!empty($locations)) {
-            $error['locations'] = array_map(function ($loc) {
-                return $loc->toArray();
-            }, $locations);
-        }
-
-        $previous = $e->getPrevious();
-        if ($previous && $previous instanceof ValidationError) {
-            $error['validation'] = $previous->getValidatorMessages();
-        }
+        $error = parent::formatError($e);
 
         // Logging
         logger()->error($error);
