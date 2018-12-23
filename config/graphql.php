@@ -131,7 +131,8 @@ return [
             ],
             'mutation' => [
                 App\GraphQL\Mutation\CreateUserMutation::class,
-            ]
+                App\GraphQL\Mutation\CreatePostMutation::class,
+            ],
         ]
     ],
 

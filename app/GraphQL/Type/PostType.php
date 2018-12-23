@@ -20,11 +20,11 @@ class PostType extends BaseType
         return [
             'id' => [
                 'type' => Type::id(),
-                'description' => 'The id of the user'
+                'description' => 'The id of the post'
             ],
-            'user' => [
-                'type' => GraphQL::type('UserType'),
-                'description' => 'The user of post',
+            'user_id' => [
+                'type' => Type::id(),
+                'description' => 'The user_id of post',
             ],
             'title' => [
                 'type' => Type::string(),
@@ -33,6 +33,10 @@ class PostType extends BaseType
             'content' => [
                 'type' => Type::string(),
                 'description' => 'The content of post',
+            ],
+            'user' => [
+                'type' => GraphQL::type('UserType'),
+                'description' => 'The user of post',
             ],
         ];
     }
