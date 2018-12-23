@@ -1,0 +1,15 @@
+mutation (
+  $user_id: ID!
+  $title: String!
+  $content: String!
+) {
+  CreatePost (
+    user_id: $user_id
+    title: $title
+    content: $content
+  ) {
+    user_id
+    title
+    content
+  }
+}
